@@ -12,4 +12,5 @@
     <string name="crashes_crashButton">"Send a sample crash"</string>
     <string name="analytics_customEventButton">"Send a sample event"</string>
     <string name="analytics_customColorButton">"Send event with color property"</string>
+    <string name="todo">TODO</string>
 </resources>
