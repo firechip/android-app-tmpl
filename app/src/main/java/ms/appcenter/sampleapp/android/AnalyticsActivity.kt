@@ -21,12 +21,12 @@ class AnalyticsActivity : Fragment() {
         val eventButton = rootView.findViewById<Button>(R.id.customEventButton)
         eventButton.setOnClickListener {
             val eventDialog: DialogFragment = EventDialog()
-            eventDialog.show(fragmentManager!!, "eventDialog")
+            activity?.let { it1 -> eventDialog.show(it1.supportFragmentManager, "eventDialog") }
         }
         val colorButton = rootView.findViewById<Button>(R.id.customColorButton)
         colorButton.setOnClickListener {
             val colorDialog: DialogFragment = ColorDialog()
-            colorDialog.show(fragmentManager!!, "colorDialog")
+            activity?.let { it1 -> colorDialog.show(it1.supportFragmentManager, "colorDialog") }
         }
         return rootView
     }
@@ -34,7 +34,7 @@ class AnalyticsActivity : Fragment() {
     class EventDialog : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             Analytics.trackEvent("Sample event")
-            val builder = AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage("Event sent").setPositiveButton("OK") { _: DialogInterface?, _: Int -> }
             return builder.create()
         }
@@ -42,7 +42,7 @@ class AnalyticsActivity : Fragment() {
 
     class ColorDialog : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val builder = AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(requireActivity())
             val colors = arrayOf<CharSequence>("Yellow", "Blue", "Red")
             builder.setTitle("Pick a color").setItems(colors) { _: DialogInterface?, index: Int ->
                 val properties: MutableMap<String, String> = HashMap()

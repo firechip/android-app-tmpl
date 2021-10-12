@@ -19,16 +19,21 @@ class CrashesActivity : Fragment() {
         val crashButton = rootView.findViewById<Button>(R.id.crashButton)
         crashButton.setOnClickListener {
             val crashDialog: DialogFragment = CrashDialog()
-            crashDialog.show(fragmentManager!!, "crashDialog")
+            activity?.let { it1 -> crashDialog.show(it1.supportFragmentManager, "crashDialog") }
         }
         return rootView
     }
 
     class CrashDialog : DialogFragment() {
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val builder = AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage("A crash report will be sent when you reopen the app.")
-                    .setPositiveButton("Crash app") { _: DialogInterface?, _: Int -> throw RuntimeException("crashing") }.setNegativeButton("Cancel") { _: DialogInterface?, _: Int -> }
+                    .setPositiveButton("Crash app") {
+                        _: DialogInterface?,
+                        _: Int -> throw RuntimeException("crashing")
+                    }.setNegativeButton("Cancel") {
+                        _: DialogInterface?, _: Int ->
+                    }
             return builder.create()
         }
     }
